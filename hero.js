@@ -78,15 +78,20 @@ var move = function(gameData, helpers) {
   var directionToHealthWell = healthWellStats.direction;
   
 
-  if (myHero.health < 40) {
+  if (myHero.health < 70) {
     //Heal no matter what if low health
     return directionToHealthWell;
   } else if (myHero.health < 100 && distanceToHealthWell === 1) {
     //Heal if you aren't full health and are close to a health well already
     return directionToHealthWell;
   } else {
-    //If healthy, go capture a diamond mine!
-    return helpers.findNearestNonTeamDiamondMine(gameData);
+    var directionToNearestDiamondMine = helpers.findNearestNonTeamDiamondMine(gameData);
+
+    if (directionToNearestDiamondMine) {
+      return directionToNearestDiamondMine;
+    } else {
+      return helpers.findNearestEnemy;
+    }
   }
 };
 
